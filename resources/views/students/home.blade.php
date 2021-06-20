@@ -548,6 +548,10 @@
                                                 <label for="religion">Religion</label>
                                                 <input class="form-control" type="text" id="religion" name="religion" value="{{$detail->religion}}" disabled>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="health_challenges">Health Challenges</label>
+                                                <input class="form-control" type="text" id="health_challenges" name="health_challenges" required>
+                                            </div>
                                             <!-- END Step 1 -->
                                         </div>
                                         <!-- Step 2 -->
@@ -582,7 +586,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="employer_gsm">Employer GSM</label>
-                                                <input class="form-control" type="text" id="employer_gsm" name="employer_gsm" required>
+                                                <input type="text" class="js-masked-phone form-control" id="employer_gsm" name="employer_gsm" placeholder="(999) 999-9999" required>
                                             </div>
                                         </div>
                                         <!-- END Step 2 -->
@@ -636,7 +640,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="landlord_gsm">Landlord GSM</label>
-                                                <input class="form-control" type="text" id="landlord_gsm" name="landlord_gsm" required>
+                                                <input type="text" class="js-masked-phone form-control" id="landlord_gsm" name="landlord_gsm" placeholder="(999) 999-9999" required>
                                             </div>
                                         </div>
                                         <!-- END Step 4 -->
@@ -679,6 +683,8 @@
                     </div>
                     @endforeach
                 <!-- END Form Wizards -->
+                @elseif (Auth::user()->clearance_form == 'NOTFILLLED')
+                    <h1>Dick</h1>
                 @endif
 
 

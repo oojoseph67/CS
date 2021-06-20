@@ -207,13 +207,30 @@ class StudentPageController extends Controller
 
     public function preliminaryForm(Request $request)
     {
-        DB::table('users')->where(
+        DB::table('personal_information')->where(
             'fID', $request['fID']
         )->update(
             [
                 'lga' => $request['lga'],
+                'parent_name' => $request['parent_name'],
+                'parent_address' => $request['parent_address'],
+                'employer_name' => $request['employer_name'],
+                'employer_address' => $request['employer_address'],
+                'employer_gsm' => ('+').$request['employer_gsm'],
+                'landlord_name' => $request['landlord_name'],
+                'landlord_address' => $request['landlord_address'],
+                'landlord_gsm' => ('+').$request['landlord_gsm'],
+                'health_challenges' => $request['health_challenges'],
             ]
         );
+
+        DB::table('users')->where(
+            'fID', $request['fID']
+        )->update([
+            'preliminary_form' => 'FILLLED'
+        ]);
+
+        return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Filling The Preliminary Form'));
     }
     
 }
