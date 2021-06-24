@@ -57,6 +57,10 @@ class PersonalInformation extends Model
         'mat_no',
         'programme_of_study',
         'expected_graduation_year',
+        'qualification_on_entry',
+        'qualification_currently',
+        'institution_attended',
+        'institution_attended_date',
     ];
 
 }

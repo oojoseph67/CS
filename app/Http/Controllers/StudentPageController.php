@@ -232,5 +232,28 @@ class StudentPageController extends Controller
 
         return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Filling The Preliminary Form'));
     }
+
+    public function clearanceForm(Request $request)
+    {
+        DB::table('personal_information')->where(
+            'fID', $request['fID']
+        )->update(
+            [
+                'mat_no' => $request['mat_no'],
+                'qualification_on_entry' => $request['qualification_on_entry'],
+                'qualification_currently' => $request['qualification_currently'],
+                'institution_attended' => $request['institution_attended'],
+                'institution_attended_date' => $request['institution_attended_date'],
+            ]
+        );
+
+        DB::table('users')->where(
+            'fID', $request['fID']
+        )->update([
+            'clearance_form' => 'FILLLED'
+        ]);
+
+        return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Filling The Preliminary Form'));
+    }
     
 }

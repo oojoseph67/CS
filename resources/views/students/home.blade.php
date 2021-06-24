@@ -219,7 +219,7 @@
 
                                             <div class="form-group">
                                                 <label for="mat_no">Matric Number (For FUPRE UG Student))</label>
-                                                <input class="form-control" type="text" name="mat_no">
+                                                <input class="form-control" type="text"  placeholder="ABC/1234/5678" name="mat_no">
                                             </div>
                                             <div class="form-group">
                                                 <label for="programme_of_study">Programme Of Study</label>
@@ -445,7 +445,7 @@
                 @elseif (Auth::user()->preliminary_form == 'NOTFILLLED')
                 <!-- Form Wizards -->
                     @foreach ($details as $detail)    
-                    <h2 class="content-heading">Preliminary Student Registration Form</h2>
+                    <h2 class="content-heading">Preliminary Form</h2>
                     <div class="row">
                         @foreach ($documents as $document)    
                         <div class="col-md-3">
@@ -558,11 +558,11 @@
                                         <div class="tab-pane" id="wizard-validation-step2" role="tabpanel">
                                             <div class="form-group">
                                                 <label for="parent_name">Parent Name</label>
-                                                <input class="form-control" type="text" id="parent_name" name="parent_name" required>
+                                                <input class="form-control" type="text" id="parent_name" spellcheck="true" name="parent_name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="parent_address">Parent Address</label>
-                                                <input class="form-control" type="text" id="parent_address" name="parent_address" required>
+                                                <input class="form-control" type="text" id="parent_address" spellcheck="true" name="parent_address" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sponsor_name">Sponsor Name</label>
@@ -578,11 +578,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="employer_name">Employer Name</label>
-                                                <input class="form-control" type="text" id="employer_name" name="employer_name" required>
+                                                <input class="form-control" type="text" id="employer_name" spellcheck="true" name="employer_name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="employer_address">Employer Address</label>
-                                                <input class="form-control" type="text" id="employer_address" name="employer_address" required>
+                                                <input class="form-control" type="text" id="employer_address" spellcheck="true" name="employer_address" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="employer_gsm">Employer GSM</label>
@@ -632,11 +632,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="landlord_name">Landlord Name </label>
-                                                <input class="form-control" type="text" id="landlord_name" name="landlord_name" required>
+                                                <input class="form-control" type="text" id="landlord_name" spellcheck="true" name="landlord_name" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="landlord_address">Landlord Address</label>
-                                                <input class="form-control" type="text" id="landlord_address" name="landlord_address" required>
+                                                <input class="form-control" type="text" id="landlord_address" spellcheck="true" name="landlord_address" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="landlord_gsm">Landlord GSM</label>
@@ -684,7 +684,143 @@
                     @endforeach
                 <!-- END Form Wizards -->
                 @elseif (Auth::user()->clearance_form == 'NOTFILLLED')
-                    <h1>Dick</h1>
+                    @foreach ($details as $detail)
+                    <h2 class="content-heading">Clearance Form</h2>
+                    <div class="row">
+                        @foreach ($documents as $document)    
+                        <div class="col-md-3">
+                            <!-- <img class="img-fluid" src="{{ asset('storage/app/public/documents/img/'. Auth::user()->profile_picture) }}"> -->
+                            <img src="{{asset('documents/passport/'. $document->passport )}}" alt="Profile" width="500" height="600">
+                        </div>
+                        @endforeach
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                             <!-- Validation Wizard -->
+                             <div class="js-wizard-validation block block block-rounded">
+                                <!-- Step Tabs -->
+                                <ul class="nav nav-tabs nav-tabs-block nav-justified" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#wizard-validation-step1" data-toggle="tab">1. Details</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#wizard-validation-step2" data-toggle="tab">2. Certification</a>
+                                    </li>
+                                </ul>
+                                <!-- END Step Tabs -->
+
+                                <!-- Form -->
+                                <form class="js-wizard-validation-form" action="{{ route('clearance-form') }}" method="POST">
+                                    @csrf
+                                    <!-- Steps Content -->
+                                    <div class="block-content block-content-full tab-content" style="min-height: 290px;">
+
+                                        <!-- Step 1 -->
+                                        <input class="form-control" type="hidden" id="fID" name="fID" value="{{auth()->user()->fID}}">
+                                        <input class="form-control" type="hidden" id="first_name" name="first_name" value="{{auth()->user()->first_name}}">
+                                        <input class="form-control" type="hidden" id="last_name" name="last_name" value="{{auth()->user()->last_name}}">
+                                        <input class="form-control" type="hidden" id="email" name="email" value="{{auth()->user()->email}}">
+                                         
+                                        <div class="tab-pane active" id="wizard-validation-step1" role="tabpanel">
+                                            
+                                             <div class="form-group">
+                                                <label for="firstname">First Name</label>
+                                                <input class="form-control" type="text" id="firstname" name="first_name" value="{{auth()->user()->first_name}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lastname">Last Name</label>
+                                                <input class="form-control" type="text" id="lastname" name="last_name" value="{{auth()->user()->last_name}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sex">Sex</label>
+                                                <input type="text" class="form-control" value="{{ $detail->sex }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="resident_address">Resident Address</label>
+                                                <input class="form-control" value="{{ $detail->resident_address }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="state_of_origin">State Of Origin</label>
+                                                <input class="form-control" value="{{ $detail->state_of_origin }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lga">LGA</label>
+                                                <input class="form-control" value="{{ $detail->lga }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="college">College</label>
+                                                <input class="form-control" value="{{ $detail->college }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="dept">Department</label>
+                                                <input class="form-control" value="{{ $detail->dept }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="programme_of_study">Programme Of Study</label>
+                                                <input class="form-control" value="{{ $detail->programme_of_study }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="qualification_on_entry">Qualification On Entry</label>
+                                                <input class="form-control" type="text" spellcheck="true" name="qualification_on_entry" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="qualification_currently">Qualification Currently</label>
+                                                <input class="form-control" type="text" spellcheck="true" name="qualification_currently">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="institution_attended">Institution Attended (Full Name) </label>
+                                                <input class="form-control" type="text" spellcheck="true" name="institution_attended" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="institution_attended_date">Institution Attended Date</label>
+                                                <input class="form-control" type="date" name="institution_attended_date" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="mat_no">Institution Attended Matric Number</label>
+                                                <input class="form-control" type="text" spellcheck="true" value="{{ $detail->mat_no }}" placeholder="ABC/1234/5678" name="mat_no" required>
+                                            </div>
+                                            <!-- END Step 1 -->
+                                        </div>
+                                        <!-- Step 2 -->
+                                        <div class="tab-pane" id="wizard-validation-step2" role="tabpanel">
+                                            <h2>
+                                                I <u><strong>  {{ auth()->user()->first_name }}  {{ auth()->user()->last_name }} </strong></u>
+                                                HEREBY DECLARE THAT THE PARTICULARS STATED IN THIS FORM ARE TO THE BEST OF MY KNOWLEDEGE CORRRECT I KNOW THAT WITH-HOLDING
+                                                ANY INFORMATION SHALL DISQUALIFY ME FROM REGISTRATION AND MATRICULATION LEAD TO MY EXPULSION FROM THE UNIVERSITY.
+                                            </h2>
+                                        </div>
+                                        <!-- END Step 2 -->
+                                    </div>
+                                    <!-- END Steps Content -->
+
+                                    <!-- Steps Navigation -->
+                                    <div class="block-content block-content-sm block-content-full bg-body-light rounded-bottom">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button type="button" class="btn btn-secondary" data-wizard="prev">
+                                                    <i class="fa fa-angle-left mr-1"></i> Previous
+                                                </button>
+                                            </div>
+                                            <div class="col-6 text-right">
+                                                <button type="button" class="btn btn-secondary" data-wizard="next">
+                                                    Next <i class="fa fa-angle-right ml-1"></i>
+                                                </button>
+                                                <button type="submit" class="btn btn-primary d-none" data-wizard="finish">
+                                                    <i class="fa fa-check mr-1"></i> Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Steps Navigation -->
+                                </form>
+                                <!-- END Form -->
+                            </div>
+                            <!-- END Validation Wizard Classic -->
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                    @endforeach
+                @elseif (Auth::user()->guarrantor_form == 'NOTFILLLED')
+                    <h1>DICK</h1>
                 @endif
 
 

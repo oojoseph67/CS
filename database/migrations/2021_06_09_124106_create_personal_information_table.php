@@ -21,7 +21,7 @@ class CreatePersonalInformationTable extends Migration
             $table->string('email')->unique();
             $table->string('gsm');
             // $table->timestamp('email_verified_at');
-            $table->string('dob');
+            $table->date('dob');
             $table->string('place_of_birth');
             $table->string('disability')->nullable();
             $table->string('health_challenges')->nullable();
@@ -56,13 +56,17 @@ class CreatePersonalInformationTable extends Migration
             $table->string('email_of_next_of_kin');
             $table->string('level_of_entry');
             $table->string('mode_of_entry');
-            $table->string('year_of_entry');
+            $table->date('year_of_entry');
             $table->string('mode_of_study');
             $table->string('college');
             $table->string('dept');
             $table->string('mat_no')->nullable();
             $table->string('programme_of_study');
             $table->string('expected_graduation_year');
+            $table->string('qualification_on_entry');
+            $table->string('qualification_currently')->nullable();
+            $table->string('institution_attended');
+            $table->date('institution_attended_date');
             $table->timestamps();
         });
     }
