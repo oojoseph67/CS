@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'pref
 
     Route::post('/preliminaryForm', [StudentPageController::class, 'preliminaryForm'])->name('preliminary-form');
     Route::post('/clearanceForm', [StudentPageController::class, 'clearanceForm'])->name('clearance-form');
+    Route::post('/guarrantorForm', [StudentPageController::class, 'guarrantorForm'])->name('guarrantor-form');
     
 });
 

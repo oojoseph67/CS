@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\PersonalInformation;
 use App\Models\Document;
 use App\Models\DocumentStatus;
+use App\Models\GuarrantorForm;
 
 
 class StudentPageController extends Controller
@@ -253,7 +254,45 @@ class StudentPageController extends Controller
             'clearance_form' => 'FILLLED'
         ]);
 
-        return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Filling The Preliminary Form'));
+        return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Filling The Clearance Form'));
+    }
+
+    public function guarrantorForm(Request $request)
+    {
+        $store_guarrantor = GuarrantorForm::create([
+            'fID' => $request['fID'],
+            'name' => $request['name'],
+            'gsm' => $request['gsm'],
+            'email' => $request['email'],
+            'title' => $request['title'],
+            'position' => $request['position'],
+            'name_of_institution' => $request['name_of_institution'],
+            'address_of_institution' => $request['address_of_institution'],
+            'time_with_applicant' => $request['time_with_applicant'],
+            'capacity' => $request['capacity'],
+            'academic_performance' => $request['academic_performance'],
+            'academic_achievement' => $request['academic_achievement'],
+            'research_potential' => $request['research_potential'],
+            'originality' => $request['originality'],
+            'judgment' => $request['judgment'],
+            'motivation' => $request['motivation'],
+            'ability_to_work_independently' => $request['ability_to_work_independently'],
+            'oral_expression' => $request['oral_expression'],
+            'written_expression' => $request['written_expression'],
+            'potential' => $request['potential'],
+            'reference_letter' => $request['reference_letter'],
+            'recommendation' => $request['recommendation']
+        ]);
+
+        $store_guarrantor->save();
+
+        DB::table('users')->where(
+            'fID', $request['fID']
+        )->update([
+            'guarrantor_form' => 'FILLLED'
+        ]);
+
+        return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Filling The Guarrantor Form'));
     }
     
 }

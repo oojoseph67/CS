@@ -1,4 +1,4 @@
-@extends('layouts.backend-student')
+@extends('layouts.simple2')
 
 @section('css_after')
     <link href="{{asset('libs/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
@@ -722,7 +722,7 @@
                                          
                                         <div class="tab-pane active" id="wizard-validation-step1" role="tabpanel">
                                             
-                                             <div class="form-group">
+                                            <div class="form-group">
                                                 <label for="firstname">First Name</label>
                                                 <input class="form-control" type="text" id="firstname" name="first_name" value="{{auth()->user()->first_name}}" disabled>
                                             </div>
@@ -772,7 +772,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="institution_attended_date">Institution Attended Date</label>
-                                                <input class="form-control" type="date" name="institution_attended_date" required>
+                                                <input class="form-control" type="date" spellcheck="true" name="institution_attended_date" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="mat_no">Institution Attended Matric Number</label>
@@ -820,7 +820,503 @@
                     </div>
                     @endforeach
                 @elseif (Auth::user()->guarrantor_form == 'NOTFILLLED')
-                    <h1>DICK</h1>
+                    @foreach ($details as $detail)  
+                    <!-- Block Tabs -->
+                    <h2 class="content-heading">Guarrantor Form</h2>
+                    <form  action="{{ route('guarrantor-form') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <!-- Block Tabs Alternative Style -->
+                                
+                                <input class="form-control" type="hidden" id="fID" name="fID" value="{{auth()->user()->fID}}">
+                                <input class="form-control" type="hidden" id="name" name="name" value="{{ $detail->name_of_guarrantor }}">
+                                <input class="form-control" type="hidden" id="gsm" name="gsm" value="{{ $detail->gsm_of_guarrantor }}">
+
+                                <div class="block block-rounded">
+                                    <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#btabs-alt-static-home">Applicant</a>
+                                        </li>
+                                    </ul>
+                                    <div class="block-content tab-content">
+                                        <div class="tab-pane active" id="btabs-alt-static-home" role="tabpanel">
+                                            <div class="form-group">
+                                                <label for="firstname">First Name</label>
+                                                <input class="form-control" id="firstname" name="first_name" value="{{auth()->user()->first_name}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="last_name">Last Name</label>
+                                                <input class="form-control" id="last_name" name="last_name" value="{{auth()->user()->last_name}}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="programme_of_study">Programme Of Study</label>
+                                                <input class="form-control" name="programme_of_study" value="{{ $detail->programme_of_study }}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Block Tabs Alternative Style -->
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Block Tabs Alternative Style (Right) -->
+                                <div class="block block-rounded">
+                                    <ul class="nav nav-tabs nav-tabs-alt justify-content-end" data-toggle="tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#btabs-alt-static2-home">Referee</a>
+                                        </li>
+                                    </ul>
+                                    <div class="block-content tab-content">
+                                        <div class="tab-pane active" id="btabs-alt-static2-home" role="tabpanel">
+                                            <div class="form-group">
+                                                <label for="title">Title</label>
+                                                <select class="form-control" id="title" name="title" required>
+                                                    <option value="">-Choose Title-</option>
+                                                    <option value="Mr.">Mr.</option>
+                                                    <option value="Mrs.">Mrs.</option>
+                                                    <option value="Miss">Miss</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input class="form-control" name="name" value="{{ $detail->name_of_guarrantor }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="gsm">GSM </label>
+                                                <input class="form-control" name="gsm" value="{{ $detail->gsm_of_guarrantor }}" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email</label>
+                                                <input class="form-control" type="email" name="email" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="position">Position </label>
+                                                <input class="form-control" type="text" name="position" spellcheck="true" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name_of_institution">Name of Institution/Agency/Organization </label>
+                                                <input class="form-control" type="text" name="name_of_institution" spellcheck="true" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address_of_institution">Address of Institution/Agency/Organization </label>
+                                                <textarea class="form-control" id="address_of_institution" name="address_of_institution" spellcheck="true" rows="4" placeholder="Address of Institution/Agency/Organization " required></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="time_with_applicant">How Long Have You Known The Applicant</label>
+                                                <input class="form-control" type="text" name="time_with_applicant" spellcheck="true"  placeholder="For ____ Years"  required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>In What Capacity: </label>
+                                                <select name="capacity" id="" class="form-control" required>
+                                                    <option value="">-Select-</option>
+                                                    <option value="Lecturer">Lecturer</option>
+                                                    <option value="Thesis or Research Supervisor">Thesis or Research Supervisor</option>
+                                                    <option value="Employer">Employer</option>
+                                                    <option value="Friend">Friend</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Block Tabs Alternative Style (Right) -->
+                            </div>
+
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-8">
+                                <!-- Block Tabs Alternative Style -->
+                                <div class="block block-rounded">
+                                    <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#btabs-alt-static-home">Applicant Rating And Personal Characteristics</a>
+                                        </li>
+                                    </ul>
+                                    <div class="block-content tab-content">
+                                        <div class="tab-pane active" id="btabs-alt-static-home" role="tabpanel">
+                                            <div class="form-group">
+                                                <label>How would you rank the candidate in terms of academic performance </label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="academic_performance" value="Among The Top 5%" required>
+                                                    <label class="form-check-label" for="example-checkbox-default1">Among The Top 5%</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="academic_performance" value="Among The Top 10%" required>
+                                                    <label class="form-check-label" for="example-checkbox-default2">Among The Top 10%</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="academic_performance" value="Among The Top 25%" required>
+                                                    <label class="form-check-label" for="example-checkbox-default3">Among The Top 25%</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="academic_performance" value="Above Average" required>
+                                                    <label class="form-check-label" for="example-checkbox-default4">Above Average</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="academic_performance" value="Below Average" required>
+                                                    <label class="form-check-label" for="example-checkbox-default5">Below Average</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <table class="table table-bordered table-striped table-vcenter">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Outstanding</th>
+                                                            <th>Above Average</th>
+                                                            <th>Average</th>
+                                                            <th>Below Average</th>
+                                                            <th>Inadequate Opportunity To Observe</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Academic Achievement
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="academic_achievement" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="academic_achievement" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="academic_achievement" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="academic_achievement" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="academic_achievement" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Research Potential
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="research_potential" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="research_potential" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="research_potential" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="research_potential" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="research_potential" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Originality
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="originality" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="originality" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="originality" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="originality" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="originality" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Judgment
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="judgment" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="judgment" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="judgment" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="judgment" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="judgment" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Motivation
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="motivation" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="motivation" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="motivation" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="motivation" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="motivation" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Ability To Work Independently
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="ability_to_work_independently" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="ability_to_work_independently" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="ability_to_work_independently" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="ability_to_work_independently" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="ability_to_work_independently" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Oral Expression
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="oral_expression" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="oral_expression" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="oral_expression" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="oral_expression" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="oral_expression" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Written Expression
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="written_expression" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="written_expression" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="written_expression" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="written_expression" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="written_expression" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center font-w600">
+                                                                Potential As A Teaching Or Research Assistant
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="potential" value="Outstanding" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="potential" value="Above Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="potential" value="Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="potential" value="Below Average" required>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="potential" value="Inadequate Opportunity To Observe" required>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Block Tabs Alternative Style -->
+                            </div>
+                            <div class="col-lg-2"></div>
+
+                            <div class="col-lg-6">
+                                <!-- Block Tabs Alternative Style -->
+                                <div class="block block-rounded">
+                                    <ul class="nav nav-tabs nav-tabs-alt" data-toggle="tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#btabs-alt-static-home">Reference Letter</a>
+                                        </li>
+                                    </ul>
+                                    <div class="block-content tab-content">
+                                        <div class="tab-pane active" id="btabs-alt-static-home" role="tabpanel">
+                                            <div class="form-group">
+                                                <label for="reference_letter">Please Justify Your Assessment In A Lettter Of Reference Describing The Applicant's Strength and Weakness</label>
+                                                <textarea class="form-control" id="reference_letter" name="reference_letter" rows="10" placeholder="Reference Letter" spellcheck="true" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Block Tabs Alternative Style -->
+                            </div>
+                            <div class="col-lg-6">
+                                <!-- Block Tabs Alternative Style (Right) -->
+                                <div class="block block-rounded">
+                                    <ul class="nav nav-tabs nav-tabs-alt justify-content-end" data-toggle="tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#btabs-alt-static2-home">Recommendation</a>
+                                        </li>
+                                    </ul>
+                                    <div class="block-content tab-content">
+                                        <div class="tab-pane active" id="btabs-alt-static2-home" role="tabpanel">
+                                            <div class="form-group">
+                                                <label>I Would Recommend This Applicant For Admission To A Graduate Studies Programme At My Own University</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="recommendation" value="Without Reservation" required>
+                                                    <label class="form-check-label" for="example-checkbox-default1">Without Reservation</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="recommendation" value="With Certain Reservation" required>
+                                                    <label class="form-check-label" for="example-checkbox-default2">With Certain Reservation</label>
+                                                </div>
+                                                <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="recommendation" value="Not At All" required>
+                                                    <label class="form-check-label" for="example-checkbox-default3">Not At All</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="recommendation" value="No Similar Programme Is Offered" required>
+                                                    <label class="form-check-label" for="example-checkbox-default3">No Similar Programme Is Offered</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Block Tabs Alternative Style (Right) -->
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-hero-primary">
+                                        <i class="fa fa-fw fa-sign-in-alt mr-1"></i> Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>                    
+                    <!-- END Block Tabs -->
+                    @endforeach
+                @else
+                    <p>
+                        Congratulations On Filling Your Form and Submitting Your Document. Seat Back And Relax While We Verify Your Details
+                    </p>
                 @endif
 
 
