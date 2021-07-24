@@ -26,7 +26,7 @@ class CreatePersonalInformationTable extends Migration
             $table->string('disability')->nullable();
             $table->string('health_challenges')->nullable();
             $table->string('sex');
-            $table->string('marital_status');
+            $table->string('martial_status');
             $table->string('title');
             $table->string('nationality');
             $table->string('religion');
@@ -63,10 +63,10 @@ class CreatePersonalInformationTable extends Migration
             $table->string('mat_no')->nullable();
             $table->string('programme_of_study');
             $table->string('expected_graduation_year');
-            $table->string('qualification_on_entry');
+            $table->string('qualification_on_entry')->nullable();
             $table->string('qualification_currently')->nullable();
-            $table->string('institution_attended');
-            $table->date('institution_attended_date');
+            $table->string('institution_attended')->nullable();
+            $table->date('institution_attended_date')->nullable();
             $table->timestamps();
         });
     }

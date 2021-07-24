@@ -51,7 +51,7 @@ class StudentPageController extends Controller
             'permmanent_address' => $request['permmanent_address'],
             'sponsor_name' => $request['sponsor_name'],
             'sponsor_address' => $request['sponsor_address'],
-            'sponsor_gsm' => $request['sponsor_gsm'],
+            'sponsor_gsm' => ('+').$request['sponsor_gsm'],
             'name_of_next_of_kin' => $request['name_of_next_of_kin'],
             'address_of_next_of_kin' => $request['address_of_next_of_kin'],
             'gsm_of_next_of_kin' => ('+').$request['gsm_of_next_of_kin'],
@@ -89,17 +89,17 @@ class StudentPageController extends Controller
     {
         $request->validate([
             'passport' => ['required', 'mimes:jpeg,png,gif,jpg', 'max:10024'],
-            'o/l_certificate' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'ufd/hnd_certificate' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'rhd/diploma_certificate' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'nysc/exemption_certificate' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'clearnce_certificate_fupre' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'birth_certificate' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'state_of_origin_certificate' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'marriage_certificate' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'admission_letter' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'application_form' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024'],
-            'transcript' => ['required', 'mimes:pdf,doc,txt,docx', 'max:10024']
+            'o/l_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'ufd/hnd_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'rhd/diploma_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'nysc/exemption_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'clearnce_certificate_fupre' => ['required', 'mimes:pdf', 'max:10024'],
+            'birth_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'state_of_origin_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'marriage_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'admission_letter' => ['required', 'mimes:pdf', 'max:10024'],
+            'application_form' => ['required', 'mimes:pdf', 'max:10024'],
+            'transcript' => ['required', 'mimes:pdf', 'max:10024']
         ]);
 
         // $name = $request->file('passport')->getClientOriginalName();
@@ -203,7 +203,7 @@ class StudentPageController extends Controller
             'documents' => 'SUBMITTED'
         ]);
 
-        return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Submitting Your Document'));
+        return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Submitting Your Document. How Proceed In Filling The Prelimiary Form'));
     }
 
     public function preliminaryForm(Request $request)

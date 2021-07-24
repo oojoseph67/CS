@@ -30,6 +30,7 @@ Route::get('/choose', [ChoosePageController::class, 'index'])->name('choose');
 
 Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'prefix' => 'stu'], function () {
     
+    
     Route::get('/', [StudentPageController::class, 'index'])->name('student.home');
 
     Route::post('/personalForm', [StudentPageController::class, 'personalForm'])->name('personal-form');
@@ -41,9 +42,9 @@ Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'pref
     
 });
 
-Route::view('/acceptance_fee', 'students.unpaid')->name('acceptance_fee');
-
 Route::view('/unpaid', 'students.unpaid')->name('unpaid');
+
+Route::view('/acceptance_fee', 'students.acceptance_fee')->name('acceptance_fee');
 
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 

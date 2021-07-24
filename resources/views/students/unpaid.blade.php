@@ -52,7 +52,7 @@
                     </p> -->
                 </div>
 
-                @if(auth()->user()->prospectus_fee_status == 'NOTPAID')
+                @if (Auth::user()->prospectus_fee_status == 'NOTPAID')
 
                 <!-- Page Content -->
                 <div class="content">
@@ -157,7 +157,7 @@
                                 <form method="POST" action="{{ route('pay') }}" accept-charset="UTF-8" class="form-horizontal" role="form">
                                     <input type="hidden" name="email" value="{{auth()->user()->email}}"> {{-- required --}}
                                     <input type="hidden" name="orderID" value="Department Fee">
-                                    <input type="hidden" name="amount" value="20000"> {{-- required in kobo --}}
+                                    <input type="hidden" name="amount" value="200000"> {{-- required in kobo --}}
                                     <input type="hidden" name="quantity" value="1">
                                     <input type="hidden" name="currency" value="NGN">
                                     <input type="hidden" name="callback_url" value="http://localhost:8000/payment/callback">
@@ -165,7 +165,7 @@
                                         'first_name' => Auth::user()->first_name,
                                         'last_name' => Auth::user()->last_name,
                                         'email' => Auth::user()->email,  
-                                        'fee_type' => 'Prospectus Fee',    
+                                        'fee_type' => 'Department Fee',    
                                         'session' => '2020/2021',                         
                                         'fID' => Auth::user()->fID,
                                         ]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}
@@ -230,7 +230,7 @@
                                         'first_name' => Auth::user()->first_name,
                                         'last_name' => Auth::user()->last_name,
                                         'email' => Auth::user()->email,  
-                                        'fee_type' => 'Prospectus Fee',    
+                                        'fee_type' => 'School Fee',    
                                         'session' => '2020/2021',                         
                                         'fID' => Auth::user()->fID,
                                         ]) }}" > {{-- For other necessary things you want to add to your payload. it is optional though --}}

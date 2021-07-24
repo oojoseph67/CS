@@ -66,6 +66,7 @@ class PaymentController extends Controller
                 'status' => $paymentDetails['data']['status'],
                 'order_number' => $order_number,
                 'order_date' => $paymentDetails['data']['paid_at'],
+                'amount' => $paymentDetails['data']['amount'],
             ]);
 
         }elseif($paymentDetails['data']['metadata']['fee_type']  == 'Prospectus Fee'){
@@ -96,6 +97,7 @@ class PaymentController extends Controller
                 'status' => $paymentDetails['data']['status'],
                 'order_number' => $order_number,
                 'order_date' => $paymentDetails['data']['paid_at'],
+                'amount' => $paymentDetails['data']['amount'],
             ]);
 
         }elseif($paymentDetails['data']['metadata']['fee_type']  == 'Department Fee'){
@@ -126,6 +128,7 @@ class PaymentController extends Controller
                 'status' => $paymentDetails['data']['status'],
                 'order_number' => $order_number,
                 'order_date' => $paymentDetails['data']['paid_at'],
+                'amount' => $paymentDetails['data']['amount'],
             ]);
 
         }elseif($paymentDetails['data']['metadata']['fee_type']  == 'School Fee'){
@@ -156,6 +159,7 @@ class PaymentController extends Controller
                 'status' => $paymentDetails['data']['status'],
                 'order_number' => $order_number,
                 'order_date' => $paymentDetails['data']['paid_at'],
+                'amount' => $paymentDetails['data']['amount'],
             ]);
 
         }

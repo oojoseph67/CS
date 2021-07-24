@@ -61,7 +61,7 @@ class RegisteredUserController extends Controller
         } elseif ($request->input('role') == 'admin') {
             return redirect()->route('admin.home');
         } elseif ($request->input('role') == 'student') {
-            return redirect()->route('acceptance_fee');
+            return redirect()->route('unpaid');
         } elseif ($request->input('role') == 'teacher') {
             return redirect()->route('teacher.home');
         } elseif ($request->input('role') == 'data-operator') {

@@ -134,7 +134,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="gsm">GSM</label>
-                                                <input type="text" class="js-masked-phone form-control" id="gsm" name="gsm" placeholder="(999) 999-9999" required>
+                                                <input type="text" class="js-masked-phone form-control" id="gsm" name="gsm" placeholder="+(999) 999-9999" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="dob">Date Of Birth</label>
@@ -284,7 +284,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="gsm_of_guarrantor">GSM Of Guarrantor</label>
-                                                <input class="form-control" type="text" spellcheck="true" name="gsm_of_guarrantor" required>
+                                                <input type="text" class="js-masked-phone form-control" id="gsm" name="gsm_of_guarrantor" placeholder="+(999) 999-9999" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="resident_address">Resident Address</label>
@@ -308,7 +308,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="sponsor_gsm">Sponsor GSM</label>
-                                                <input class="form-control" type="text" spellcheck="true" name="sponsor_gsm" required>
+                                                <input type="text" class="js-masked-phone form-control" id="gsm" name="sponsor_gsm" placeholder="+(999) 999-9999" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="name_of_next_of_kin">Name Of Next Of Kin</label>
@@ -368,13 +368,29 @@
                         <input class="form-control" type="hidden" id="last_name" name="last_name" value="{{auth()->user()->last_name}}">
                         <input class="form-control" type="hidden" id="email" name="email" value="{{auth()->user()->email}}">
 
+                        <div class="row">
+                            <div class="col-md-3">
+                                <h3>
+                                    <b>Note:</b> Only PDF Files Can Be Uploaded Execept In The Password Field
+                                </h3>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="o/l_card">O/L Card</label>
+                                    <input type="text" class="js-masked-phone form-control" id="o/l_card" name="o/l_card" placeholder="(999) 999-9999"  required>
+                                </div> 
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
 
                         <div class="row">
+                            
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="o/l_certificate">O/l Certificate</label>
+                                    <label for="o/l_certificate">O/L Certificate</label>
                                     <input type="file" data-plugins="dropify" name="o/l_certificate" required>                           
                                 </div>
+                                                               
                                 <div class="form-group">
                                     <label for="nysc/exemption_certificate">Relevant Higher Degree/Diploma Certificate</label>
                                     <input type="file" data-plugins="dropify" name="nysc/exemption_certificate" required>                           
@@ -384,23 +400,19 @@
                                     <input type="file" data-plugins="dropify" name="birth_certificate" required>                           
                                 </div>
                                  <div class="form-group">
-                                    <label for="rhd/diploma_certificate">rhd/diploma_certificate</label>
+                                    <label for="rhd/diploma_certificate">RHD/Diploma Certificate</label>
                                     <input type="file" data-plugins="dropify" name="rhd/diploma_certificate" required>                           
                                 </div>
-                                <div class="form-group">
-                                    <label for="application_form">Copy Of The Online Application Form</label>
-                                    <input type="file" data-plugins="dropify" name="application_form" required>                           
-                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                {{-- <div class="form-group">
+                                    <label for="o/l_card">O/l Card</label>
+                                    <input type="input" name="o/l_card" required>                           
+                                </div>                            --}} 
                                 <div class="form-group">
                                     <label for="state_of_origin_certificate">State Of Origin Certificate</label>
                                     <input type="file" data-plugins="dropify" name="state_of_origin_certificate" required>                           
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="o/l_card">O/l Card</label>
-                                    <input type="input" name="o/l_card" required>                           
-                                </div>                           
                                 <div class="form-group">
                                     <label for="nysc/exemption_certificate">NYSC Discharge/Exemption Certificate</label>
                                     <input type="file" data-plugins="dropify" name="nysc/exemption_certificate" required>                           
@@ -412,6 +424,10 @@
                                 <div class="form-group">
                                     <label for="transcript">Transcript</label>
                                     <input type="file" data-plugins="dropify" name="transcript" required>                           
+                                </div>
+                                <div class="form-group">
+                                    <label for="passport">Passport</label>
+                                    <input type="file" data-plugins="dropify" name="passport" required>                           
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -428,8 +444,8 @@
                                     <input type="file" data-plugins="dropify" name="admission_letter" required>                           
                                 </div>
                                 <div class="form-group">
-                                    <label for="passport">passport</label>
-                                    <input type="file" data-plugins="dropify" name="passport" required>                           
+                                    <label for="application_form">Copy Of The Online Application Form</label>
+                                    <input type="file" data-plugins="dropify" name="application_form" required>                           
                                 </div>
                             </div>
                         </div>
@@ -648,7 +664,7 @@
                                         <!-- START Step 5 -->
                                         <div class="tab-pane" id="wizard-validation-step5" role="tabpanel">
                                             <h2>
-                                                I <u><strong>  {{ auth()->user()->first_name }}  {{ auth()->user()->last_name }} </strong></u> DO HEREBY CERIFT THAT THE INFORMATION WHICH I HAVE GIVEN ABOVE IS CORRECT
+                                                I <u><strong>  {{ auth()->user()->first_name }}  {{ auth()->user()->last_name }} </strong></u> DO HEREBY CERIFY THAT THE INFORMATION WHICH I HAVE GIVEN ABOVE IS CORRECT
                                             </h2>
                                         </div> 
                                         <!-- END Step 5 -->
@@ -1315,7 +1331,7 @@
                     @endforeach
                 @else
                     <p>
-                        Congratulations On Filling Your Form and Submitting Your Document. Seat Back And Relax While We Verify Your Details
+                        Congratulations On Filling Your Forms and Submitting Your Document. Seat Back And Relax While We Verify Your Details
                     </p>
                 @endif
 

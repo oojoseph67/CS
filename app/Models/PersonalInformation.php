@@ -26,6 +26,7 @@ class PersonalInformation extends Model
         'religion',
         'state_of_origin',
         'lga',
+        'martial_status',
         'language',
         'name_of_guarrantor',
         'address_of_guarrantor',

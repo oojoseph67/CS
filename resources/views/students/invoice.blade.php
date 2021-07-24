@@ -53,14 +53,14 @@
                     <!-- Invoice -->
                     <div class="block block-rounded">
                         <div class="block-header block-header-default">
-                            <h3 class="block-title">#INV01364</h3>
+                            <h3 class="block-title">#INV{{$order_number}}</h3>
                             <div class="block-options">
                                 <!-- Print Page functionality is initialized in Helpers.print() -->
                                 <button type="button" class="btn-block-option" onclick="Dashmix.helpers('print');">
                                     <i class="si si-printer mr-1"></i> Print Invoice
                                 </button>
                                 <button type="button" class="btn-block-option">
-                                    <i class="si si-arrow mr-1"></i> <a href="{{ route('dashboard') }}">Continue</a> 
+                                    <i class="si si-arrow mr-1"></i> <a href="{{ route('student.home') }}">Continue</a> 
                                 </button>
                             </div>
                         </div>
@@ -110,22 +110,22 @@
                                             <tr>
                                                 <td class="text-center">1</td>
                                                 <td>
-                                                    <p class="font-w600 mb-1">Accepetance Fee</p>
-                                                    <div class="text-muted">Accepetance Fee Into The PG Programme</div>
+                                                    <p class="font-w600 mb-1">{{$fee_type}}</p>
+                                                    <div class="text-muted">{{$fee_type}} Into The PG Programme</div>
                                                 </td>
                                                 <td class="text-center">
                                                     <span class="badge badge-pill badge-primary">1</span>
                                                 </td>
-                                                <td class="text-right">#50,000.00</td>
-                                                <td class="text-right">#50,000.00</td>
+                                                <td class="text-right">#{{$amount}}</td>
+                                                <td class="text-right">#{{$amount}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4" class="font-w600 text-right">Subtotal</td>
-                                                <td class="text-right">#50,000.00</td>
+                                                <td class="text-right">#{{$amount}}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="4" class="font-w700 text-uppercase text-right bg-body-light">Total Due</td>
-                                                <td class="font-w700 text-right bg-body-light">#50,000.00</td>
+                                                <td class="font-w700 text-right bg-body-light">#{{$amount}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
