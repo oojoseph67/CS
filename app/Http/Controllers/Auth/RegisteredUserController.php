@@ -56,11 +56,7 @@ class RegisteredUserController extends Controller
 
         // Auth::login($user);
 
-        if ($request->input('role') == 'super-admin') {
-            return redirect()->route('super-admin.home');
-        } elseif ($request->input('role') == 'admin') {
-            return redirect()->route('admin.home');
-        } elseif ($request->input('role') == 'student') {
+        if ($request->input('role') == 'student') {
             return redirect()->route('unpaid');
         } elseif ($request->input('role') == 'teacher') {
             return redirect()->route('teacher.home');

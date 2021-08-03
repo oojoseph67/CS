@@ -1,4 +1,4 @@
-@extends('layouts.unpaid')
+@extends('layouts.simple')
 
 @section('content')
     <!-- Hero -->

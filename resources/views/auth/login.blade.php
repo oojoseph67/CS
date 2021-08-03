@@ -19,6 +19,9 @@
                                     <span class="text-dark">Dash</span><span class="text-primary">mix</span>
                                 </a>
                                 <p class="text-uppercase font-w700 font-size-sm text-muted">Sign In</p>
+
+                                <x-auth-validation-errors class="alert alert-danger alert-dismissible fade show mb-4" role="alert" :errors="$errors" />
+
                             </div>
                             <!-- END Header -->
 

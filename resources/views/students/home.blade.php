@@ -1,25 +1,36 @@
 @extends('layouts.simple2')
 
-@section('css_after')
+@section('css_before')
+    <!-- Page JS Plugins CSS -->
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/dataTables.bootstrap4.css') }}">
+    <link rel="stylesheet" href="{{ asset('js/plugins/datatables/buttons-bs4/buttons.bootstrap4.min.css') }}">
+
     <link href="{{asset('libs/dropzone/dropzone.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('libs/dropify/dropify.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
-
 @section('js_after')
     <!-- Page JS Plugins -->
-    <script src="{{ asset('js/dashmix.core.min.js') }}"></script>
-    <script src="{{ asset('js/dashmix.app.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/jquery-bootstrap-wizard/bs4/jquery.bootstrap.wizard.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/jquery-validation/additional-methods.js') }}"></script>
-    <script src="{{ asset('js/plugins/jquery.maskedinput/jquery.maskedinput.min.js')}}"></script>
+    <script src="{{ asset('js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/datatables/buttons/buttons.colVis.min.js') }}"></script>
+
+    <!-- Page JS Code -->
+    <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
 
     <script src="{{asset('libs/dropzone/dropzone.min.js')}}"></script>
     <script src="{{asset('libs/dropify/dropify.min.js')}}"></script>
 
     <script src="{{asset('js/pages/form-fileuploads.init.js')}}"></script>
-    
+
+    <script src="{{asset('js/plugins/jquery-bootstrap-wizard/bs4/jquery.bootstrap.wizard.min.js')}}"></script>
+    <script src="{{asset('js/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+    <script src="{{asset('js/plugins/jquery-validation/additional-methods.js')}}"></script>
+
 
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/be_forms_wizard.min.js') }}"></script>
@@ -32,11 +43,11 @@
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
-                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Main Title</h1>
+                <h1 class="flex-sm-fill font-size-h2 font-w400 mt-2 mb-0 mb-sm-2">Student Clearance</h1>
                 <nav class="flex-sm-00-auto ml-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item">Examples</li>
-                        <li class="breadcrumb-item active" aria-current="page">Blank</li>
+                        <li class="breadcrumb-item">PG</li>
+                        <li class="breadcrumb-item active" aria-current="page">Clearance System</li>
                     </ol>
                 </nav>
             </div>
@@ -75,6 +86,7 @@
             </div>
           @endif
         </div>
+        
 
 
         <!-- Your Block -->
@@ -87,7 +99,7 @@
 
                 @if (Auth::user()->personal_form == 'NOTFILLLED')
                  <!-- Validation Wizards -->
-                 <h2 class="content-heading">Student Information</h2>
+                    <h2 class="content-heading">Student Information</h2>
                     <div class="row">
                         <div class="col-md-3"></div>
                         <div class="col-md-6">
@@ -212,10 +224,10 @@
                                                 </select>
                                             </div>
 
-                                            <div class="form-group">
+                                            {{-- <div class="form-group">
                                                 <label for="email">Department</label>
                                                 <input class="form-control" type="text" spellcheck="true" name="department" required>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="form-group">
                                                 <label for="mat_no">Matric Number (For FUPRE UG Student))</label>
@@ -231,14 +243,6 @@
                                                     <option value="M.ENGG">M.ENGG</option>
                                                     <option value="PH.D">PH.D</option>
                                                 </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="year_of_entry"> Year of Entry </label>
-                                                <input class="form-control" type="date" name="year_of_entry" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="year_of_graduation"> Expected Year Graudation </label>
-                                                <input class="form-control" type="date" name="year_of_graduation" required>
                                             </div>
 
                                             <!-- <div class="form-group">
@@ -530,7 +534,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="gsm">GSM</label>
-                                                <input class="form-control" type="text" id="gsm" name="last_name" value="{{$detail->gsm}}" disabled>
+                                                <input class="form-control" type="text" id="gsm" name="gsm" value="{{$detail->gsm}}" disabled>
                                             </div>
                                             <div class="form-group">
                                                 <label for="sex">Sex</label>
@@ -614,8 +618,27 @@
                                                 <input class="form-control" type="text" id="programme_of_study" name="programme_of_study" value="{{$detail->programme_of_study}}" disabled>
                                             </div>
                                             <div class="form-group">
+                                                <label for="college">College</label>
+                                                <input class="form-control" type="text" id="college" name="college" value="{{$detail->college}}" disabled>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="dept">Department</label>
-                                                <input class="form-control" type="text" id="dept" name="dept" value="{{$detail->dept}}" disabled>
+                                                @if ($detail->college == 'Science')
+                                                    <select class="form-control" name="dept" id="dept" required>
+                                                        <option value="">-Choose-</option>
+                                                        <option value="Computer Science">Computer Science</option>
+                                                        <option value="Mathematics">Mathematics</option>
+                                                        <option value="Physics">Physics</option>
+                                                    </select>    
+                                                @elseif ($detail->college == 'Technology')
+                                                    <select class="form-control" name="dept" id="dept" required>
+                                                        <option value="">-Choose-</option>
+                                                        <option value="Marine Engineering">Marine Engineering</option>
+                                                        <option value="Pertroleum Engineering">Pertroleum Engineering</option>
+                                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                                    </select> 
+                                                @endif    
+                                                {{-- <input class="form-control" type="text" id="dept" name="dept" value="{{$detail->dept}}" disabled> --}}
                                             </div>
                                             <div class="form-group">
                                                 <label for="mat_no">Matric Number</label>
@@ -634,8 +657,16 @@
                                                 <input class="form-control" type="text" id="mode_of_study" name="mode_of_study" value="{{$detail->mode_of_study}}" disabled>
                                             </div>
                                             <div class="form-group">
+                                                <label for="year_of_entry"> Year of Entry </label>
+                                                <input class="form-control" type="date" name="year_of_entry" required>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="expected_graduation_year">Expected Graduation Year</label>
-                                                <input class="form-control" type="text" id="expected_graduation_year" name="expected_graduation_year" value="{{$detail->expected_graduation_year}}" disabled>
+                                                @if ($detail->college == 'Science')
+                                                    <input class="form-control" type="text" id="expected_graduation_year" name="expected_graduation_year" value="2023-11-11" disabled>
+                                                @elseif ($detail->college == 'Technology')
+                                                    <input class="form-control" type="text" id="expected_graduation_year" name="expected_graduation_year" value="2024-11-11" disabled>
+                                                @endif                                                
                                             </div>
                                         </div>
                                         <!-- END Step 3 -->
@@ -1329,10 +1360,301 @@
                     </form>                    
                     <!-- END Block Tabs -->
                     @endforeach
+
                 @else
-                    <p>
-                        Congratulations On Filling Your Forms and Submitting Your Document. Seat Back And Relax While We Verify Your Details
-                    </p>
+                    @foreach ($form_statuses as $form_status)
+                        @if ($form_status->preliminary_form == 'NOT APPROVED')
+                            <h4>Unfortunally You Had Some Errors In Your Form That Needs To Be Corrected Carefully Follow The Recommendation Made And Correct Your Form</h4>
+                        
+                             <div class="form-group">
+                                <label for="note">Recommended Changes</label>
+                                <textarea class="form-control form-control-alt" id="note" name="note" rows="5" name="recommendation" disabled placeholder="{{$form_status->hod_recommendation}}"></textarea>
+                            </div>
+
+                            @foreach ($details as $detail)    
+                            <h2 class="content-heading">Preliminary Form</h2>
+                            <div class="row">
+                                @foreach ($documents as $document)    
+                                <div class="col-md-3">
+                                    <!-- <img class="img-fluid" src="{{ asset('storage/app/public/documents/img/'. Auth::user()->profile_picture) }}"> -->
+                                    <img src="{{asset('documents/passport/'. $document->passport )}}" alt="Profile" width="500" height="600">
+                                </div>
+                                @endforeach
+                                <div class="col-md-2"></div>
+                                <div class="col-md-7">
+                                    <!-- Validation Wizard -->
+                                    <div class="js-wizard-validation block block block-rounded">
+                                        <!-- Step Tabs -->
+                                        <ul class="nav nav-tabs nav-tabs-block nav-justified" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#wizard-validation-step1" data-toggle="tab">1. Personal Data</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#wizard-validation-step2" data-toggle="tab">2. Parents/Sponsor(S) Data</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#wizard-validation-step3" data-toggle="tab">3. Programme</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="#wizard-validation-step4" data-toggle="tab">4. Other Relevant Data</a>
+                                            </li>
+                                        </ul>
+                                        <!-- END Step Tabs -->
+
+                                        <!-- Form -->
+                                        <form class="js-wizard-validation-form" action="{{ route('update-preliminary-form') }}" method="POST">
+                                            @csrf
+                                            <!-- Steps Content -->
+                                            <div class="block-content block-content-full tab-content" style="min-height: 290px;">
+
+                                                <!-- Step 1 -->
+                                                <input class="form-control" type="hidden" id="fID" name="fID" value="{{auth()->user()->fID}}">
+                                                <input class="form-control" type="hidden" id="first_name" name="first_name" value="{{auth()->user()->first_name}}">
+                                                <input class="form-control" type="hidden" id="last_name" name="last_name" value="{{auth()->user()->last_name}}">
+                                                <input class="form-control" type="hidden" id="email" name="email" value="{{auth()->user()->email}}">
+                                                
+                                                <div class="tab-pane active" id="wizard-validation-step1" role="tabpanel">
+                                                    <div class="form-group">
+                                                        <label for="session">Session</label>
+                                                        <input class="form-control" type="text" id="session" name="session" value="2020/2021" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="date">Date</label>
+                                                        <input class="form-control" type="text" id="date" name="date" value="Today" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="firstname">First Name</label>
+                                                        <input class="form-control" type="text" id="firstname" name="first_name" value="{{auth()->user()->first_name}}" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="lastname">Last Name</label>
+                                                        <input class="form-control" type="text" id="lastname" name="last_name" value="{{auth()->user()->last_name}}" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input class="form-control" type="text" id="email" name="email" value="{{auth()->user()->email}}" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="gsm">GSM</label>
+                                                        <input class="form-control" type="text" id="gsm" name="gsm" value="{{$detail->gsm}}">
+                                                    </div>
+                                                   <div class="form-group">
+                                                        <label for="sex">Sex</label>
+                                                        <select class="form-control" id="sex" name="sex">
+                                                            <option value="{{$detail->sex}}">{{$detail->sex}}</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                        </select>
+                                                        
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="martial_status">Marital Status</label>
+                                                        <select class="form-control" id="martial_status" name="martial_status">
+                                                            <option value="{{$detail->martial_status}}">{{$detail->martial_status}}</option>
+                                                            <option value="Married">Married</option>
+                                                            <option value="Divorced">Divorced</option>
+                                                            <option value="Widowed">Widowed</option>
+                                                            <option value="Single">Single</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="dob">Date Of Birth</label>
+                                                        <input class="form-control" type="text" id="dob" name="dob" value="{{$detail->dob}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="place_of_birth">Place Of Birth</label>
+                                                        <input class="form-control" type="text" id="place_of_birth" name="place_of_birth" value="{{$detail->place_of_birth}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="state_of_origin">State Of Origin</label>
+                                                        <input class="form-control" type="text" id="state_of_origin" name="state_of_origin" value="{{$detail->state_of_origin}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="lga">LGA</label>
+                                                        <input class="form-control" type="text" id="lga" name="lga" value="{{$detail->lga}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="nationality">Nationality</label>
+                                                        <input class="form-control" type="text" id="nationality" name="nationality" value="{{$detail->nationality}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="religion">Religion</label>
+                                                        <input class="form-control" type="text" id="religion" name="religion" value="{{$detail->religion}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="health_challenges">Health Challenges</label>
+                                                        <input class="form-control" type="text" id="health_challenges" name="health_challenges" value="{{$detail->health_challenges}}">
+                                                    </div>
+                                                    <!-- END Step 1 -->
+                                                </div>
+                                                <!-- Step 2 -->
+                                                <div class="tab-pane" id="wizard-validation-step2" role="tabpanel">
+                                                    <div class="form-group">
+                                                        <label for="parent_name">Parent Name</label>
+                                                        <input class="form-control" type="text" id="parent_name" spellcheck="true" name="parent_name" value="{{$detail->parent_name}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="parent_address">Parent Address</label>
+                                                        <input class="form-control" type="text" id="parent_address" spellcheck="true" name="parent_address" value="{{$detail->parent_address}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sponsor_name">Sponsor Name</label>
+                                                        <input class="form-control" type="text" id="sponsor_name" name="sponsor_name" value="{{$detail->sponsor_name}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sponsor_address">Sponsor Address</label>
+                                                        <input class="form-control" type="text" id="sponsor_address" name="sponsor_address" value="{{$detail->sponsor_address}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="sponsor_gsm">Sponsor GSM</label>
+                                                        <input class="form-control" type="text" id="sponsor_gsm" name="sponsor_gsm" value="{{$detail->sponsor_gsm}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="employer_name">Employer Name</label>
+                                                        <input class="form-control" type="text" id="employer_name" spellcheck="true" name="employer_name" value="{{$detail->sponsor_name}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="employer_address">Employer Address</label>
+                                                        <input class="form-control" type="text" id="employer_address" spellcheck="true" name="employer_address" value="{{$detail->employer_address}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="employer_gsm">Employer GSM</label>
+                                                        <input type="text" class="js-masked-phone form-control" id="employer_gsm" name="employer_gsm" placeholder="(999) 999-9999" value="{{$detail->employer_gsm}}">
+                                                    </div>
+                                                </div>
+                                                <!-- END Step 2 -->
+
+                                                <!-- Step 3 -->
+                                                <div class="tab-pane" id="wizard-validation-step3" role="tabpanel">
+                                                    <div class="form-group">
+                                                        <label for="programme_of_study">Programme Of Study</label>
+                                                        <select class="form-control" id="programme_of_study" name="programme_of_study" id="programme_of_study" required>
+                                                            <option selected value="{{$detail->programme_of_study}}">{{$detail->programme_of_study}}</option>
+                                                            <option value="POSTGRADUATE DIPLOMA">POSTGRADUATE DIPLOMA</option>
+                                                            <option value="MSC">MSC</option>
+                                                            <option value="M.ENGG">M.ENGG</option>
+                                                            <option value="PH.D">PH.D</option>
+                                                        </select>
+                                                        {{-- <input class="form-control" type="text" id="programme_of_study" name="programme_of_study" value="{{$detail->programme_of_study}}"> --}}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="college">College</label>
+                                                        <input type="hidden" name="college" value="{{$detail->college}}">
+                                                        <input class="form-control" type="text" id="college" name="college" value="{{$detail->college}}" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="dept">Department</label>
+                                                        @if ($detail->college == 'Science')
+                                                            <select class="form-control" name="dept" id="dept">
+                                                                <option value="{{$detail->dept}}">{{$detail->dept}}</option>
+                                                                <option value="Computer Science">Computer Science</option>
+                                                                <option value="Mathematics">Mathematics</option>
+                                                                <option value="Physics">Physics</option>
+                                                            </select>    
+                                                        @elseif ($detail->college == 'Technology')
+                                                            <select class="form-control" name="dept" id="dept">
+                                                                <option value="{{$detail->dept}}">{{$detail->dept}}</option>
+                                                                <option value="Marine Engineering">Marine Engineering</option>
+                                                                <option value="Pertroleum Engineering">Pertroleum Engineering</option>
+                                                                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                                            </select> 
+                                                        @endif    
+                                                        {{-- <input class="form-control" type="text" id="dept" name="dept" value="{{$detail->dept}}" disabled> --}}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="mat_no">Matric Number</label>
+                                                        <input class="form-control" type="text" id="mat_no" name="mat_no" value="{{$detail->mat_no}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="session">Session Admitted</label>
+                                                        <input class="form-control" type="text" id="session" name="session" value="2020/2021" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="session">Current Session</label>
+                                                        <input class="form-control" type="text" id="session" name="session" value="2020/2021" disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="mode_of_study">Mode Of Study</label>
+                                                        <input class="form-control" type="text" id="mode_of_study" name="mode_of_study" value="{{$detail->mode_of_study}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="year_of_entry"> Year of Entry </label>
+                                                        <input class="form-control" type="date" name="year_of_entry" value="{{$detail->year_of_entry}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="expected_graduation_year">Expected Graduation Year</label>
+                                                        @if ($detail->college == 'Science')
+                                                            <input class="form-control" type="text" id="expected_graduation_year" name="expected_graduation_year" value="2023-11-11" disabled>
+                                                        @elseif ($detail->college == 'Technology')
+                                                            <input class="form-control" type="text" id="expected_graduation_year" name="expected_graduation_year" value="2024-11-11" disabled>
+                                                        @endif                                                
+                                                    </div>
+                                                </div>
+                                                <!-- END Step 3 -->
+
+                                                <!-- START Step 4 -->
+                                                <div class="tab-pane" id="wizard-validation-step4" role="tabpanel">
+                                                    <div class="form-group">
+                                                        <label for="resident_address">Residential Address</label>
+                                                        <input class="form-control" type="text" id="resident_address" name="resident_address" value="{{$detail->resident_address}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="landlord_name">Landlord Name </label>
+                                                        <input class="form-control" type="text" id="landlord_name" name="landlord_name" value="{{$detail->landlord_name}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="landlord_address">Landlord Address</label>
+                                                        <input class="form-control" type="text" id="landlord_address" name="landlord_address" value="{{$detail->landlord_address}}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="landlord_gsm">Landlord GSM</label>
+                                                        <input type="text" class="js-masked-phone form-control" id="landlord_gsm" name="landlord_gsm" placeholder="(999) 999-9999" value="{{$detail->landlord_gsm}}">
+                                                    </div>
+                                                </div>
+                                                <!-- END Step 4 -->
+                                            </div>
+                                            <!-- END Steps Content -->
+
+                                            <!-- Steps Navigation -->
+                                            <div class="block-content block-content-sm block-content-full bg-body-light rounded-bottom">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <button type="button" class="btn btn-secondary" data-wizard="prev">
+                                                            <i class="fa fa-angle-left mr-1"></i> Previous
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-6 text-right">
+                                                        <button type="button" class="btn btn-secondary" data-wizard="next">
+                                                            Next <i class="fa fa-angle-right ml-1"></i>
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary d-none" data-wizard="finish">
+                                                            <i class="fa fa-check mr-1"></i> Update
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END Steps Navigation -->
+                                        </form>
+                                        <!-- END Form -->
+                                    </div>
+                                    <!-- END Validation Wizard Classic -->
+                                </div>
+                                
+                            </div>
+                            @endforeach
+                        
+                        @elseif($form_status->preliminary_form == 'CLEARED')
+                            <p>
+                                You Have Been Cleared By The HOD. Wait For The PG Officer To Clear You
+                            </p>
+                        @else
+                            <p>
+                                Congratulations On Filling Your Forms and Submitting Your Document. Seat Back And Relax While We Verify Your Details
+                            </p>
+                        @endif
+                    @endforeach                
+                
+                    
                 @endif
 
 

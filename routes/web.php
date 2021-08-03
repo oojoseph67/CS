@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChoosePageController;
 use App\Http\Controllers\StudentPageController;
+use App\Http\Controllers\StaffPageController;
 use App\Http\Controllers\PaymentController;
 
 /*
@@ -39,12 +40,21 @@ Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'pref
     Route::post('/preliminaryForm', [StudentPageController::class, 'preliminaryForm'])->name('preliminary-form');
     Route::post('/clearanceForm', [StudentPageController::class, 'clearanceForm'])->name('clearance-form');
     Route::post('/guarrantorForm', [StudentPageController::class, 'guarrantorForm'])->name('guarrantor-form');
+
+    Route::post('/updatePreliminaryForm', [StudentPageController::class, 'updatePreliminaryForm'])->name('update-preliminary-form');
     
 });
 
-Route::view('/unpaid', 'students.unpaid')->name('unpaid');
+Route::group(['middleware' => ['auth', 'hod'], 'prefix' => 'hod'], function (){
 
-Route::view('/acceptance_fee', 'students.acceptance_fee')->name('acceptance_fee');
+    Route::get('/', [StaffPageController::class, 'hodIndex'])->name('hod.home');
+
+    Route::post('/clearance', [StaffPageController::class, 'clearanceStatus'])->name('clearance-status');
+});
+
+Route::view('/unpaid', 'students.unpaid')->name('unpaid')->middleware('auth');
+
+Route::view('/acceptance_fee', 'students.acceptance_fee')->name('acceptance_fee')->middleware('auth');
 
 Route::post('/pay', [PaymentController::class, 'redirectToGateway'])->name('pay');
 

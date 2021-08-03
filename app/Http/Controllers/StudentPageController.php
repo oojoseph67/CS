@@ -12,6 +12,7 @@ use App\Models\PersonalInformation;
 use App\Models\Document;
 use App\Models\DocumentStatus;
 use App\Models\GuarrantorForm;
+use App\Models\ClearanceStatus;
 
 
 class StudentPageController extends Controller
@@ -26,9 +27,14 @@ class StudentPageController extends Controller
             'fID', Auth::user()->fID
         )->get();
 
+        $form_statuses = DB::table('clearance_statuses')->where(
+            'fID', Auth::user()->fID
+        )->get();
+
         return view('students.home', [
             'details' => $details,
-            'documents' => $documents
+            'documents' => $documents,
+            'form_statuses' => $form_statuses
         ]);
     }
 
@@ -68,10 +74,10 @@ class StudentPageController extends Controller
             'year_of_entry' => $request['year_of_entry'],
             'mode_of_study' => $request['mode_of_study'],
             'college' => $request['college'],
-            'dept' => $request['department'],
+            // 'dept' => $request['dept'],
             'mat_no' => $request['mat_no'],
             'programme_of_study' => $request['programme_of_study'],
-            'expected_graduation_year' => $request['year_of_graduation']
+            // 'expected_graduation_year' => $request['year_of_graduation']
         ]);
 
         $store_user->save();
@@ -81,6 +87,13 @@ class StudentPageController extends Controller
         )->update([
             'personal_form' => 'FILLLED'
         ]);
+
+        $clearance = ClearanceStatus::create([
+            'fID' => $request['fID'],
+            'personal_form'=> 'PENDING REVIEW'
+        ]);
+
+        $clearance->save();
 
         return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on filling your personal form. Now Please Submit Your Document '. $request['role']));
     }
@@ -197,6 +210,14 @@ class StudentPageController extends Controller
 
         $store_documment_status->save();  
 
+        DB::table('clearance_statuses')->where(
+            'fID', Auth::user()->fID
+        )->update(
+            [
+                'document' => 'PENDING REVIEW'
+            ]
+        );
+
         DB::table('users')->where(
             'fID', $request['fID']
         )->update([
@@ -212,6 +233,8 @@ class StudentPageController extends Controller
             'fID', $request['fID']
         )->update(
             [
+                'dept' => $request['dept'],
+                'expected_graduation_year' => $request['year_of_graduation'],
                 'lga' => $request['lga'],
                 'parent_name' => $request['parent_name'],
                 'parent_address' => $request['parent_address'],
@@ -222,6 +245,14 @@ class StudentPageController extends Controller
                 'landlord_address' => $request['landlord_address'],
                 'landlord_gsm' => ('+').$request['landlord_gsm'],
                 'health_challenges' => $request['health_challenges'],
+            ]
+        );
+
+        DB::table('clearance_statuses')->where(
+            'fID', Auth::user()->fID
+        )->update(
+            [
+                'preliminary_form' => 'PENDING REVIEW'
             ]
         );
 
@@ -245,6 +276,14 @@ class StudentPageController extends Controller
                 'qualification_currently' => $request['qualification_currently'],
                 'institution_attended' => $request['institution_attended'],
                 'institution_attended_date' => $request['institution_attended_date'],
+            ]
+        );
+
+        DB::table('clearance_statuses')->where(
+            'fID', Auth::user()->fID
+        )->update(
+            [
+                'clearance_form' => 'PENDING REVIEW'
             ]
         );
 
@@ -286,6 +325,14 @@ class StudentPageController extends Controller
 
         $store_guarrantor->save();
 
+        DB::table('clearance_statuses')->where(
+            'fID', Auth::user()->fID
+        )->update(
+            [
+                'guarrantor_form' => 'PENDING REVIEW'
+            ]
+        );
+
         DB::table('users')->where(
             'fID', $request['fID']
         )->update([
@@ -293,6 +340,70 @@ class StudentPageController extends Controller
         ]);
 
         return redirect()->route('student.home')->withStatus(__('Hey '. $request['last_name']. ' Congratulations on Filling The Guarrantor Form'));
+    }
+
+    public function updatePreliminaryForm(Request $request)
+    {
+        DB::table('personal_information')->where(
+            'fID', Auth::user()->fID 
+        )->update(
+            [
+                'gsm' => $request['gsm'],
+                'dob' => $request['dob'],
+                'sex' => $request['sex'],
+                'martial_status' => $request['martial_status'],
+                'place_of_birth' => $request['place_of_birth'],
+                'state_of_origin' => $request['state_of_origin'],
+                'nationality' => $request['nationality'],
+                'lga' => $request['lga'],
+                'religion' => $request['religion'],
+                'health_challenges' => $request['health_challenges'],                
+                'parent_name' => $request['parent_name'],
+                'parent_address' => $request['parent_address'],
+                'sponsor_name' => $request['sponsor_name'],
+                'sponsor_address' => $request['sponsor_address'],
+                'employer_name' => $request['employer_name'],
+                'employer_address' => $request['employer_address'],
+                'employer_gsm' => $request['employer_gsm'],
+                'mat_no' => $request['mat_no'],
+                'programme_of_study' => $request['programme_of_study'],
+                'dept' => $request['dept'],
+                'year_of_entry' => $request['year_of_entry'],
+                'mode_of_study' => $request['mode_of_study'],
+                'expected_graduation_year' => $request['year_of_graduation'],
+                'resident_address' => $request['resident_address'],
+                'landlord_name' => $request['landlord_name'],
+                'landlord_address' => $request['landlord_address'],
+                'landlord_gsm' => $request['landlord_gsm'],
+
+
+                // 'disability' => $request['disability'],
+                // 'name_of_guarrantor' => $request['name_of_guarrantor'],
+                // 'address_of_guarrantor' => $request['address_of_guarrantor'],
+                // 'gsm_of_guarrantor' => $request['gsm_of_guarrantor'],
+                // 'private_address' => $request['private_address'],
+                // 'permmanent_address' => $request['permmanent_address'],
+                // 'sponsor_gsm' => ('+') . $request['sponsor_gsm'],
+                // 'name_of_next_of_kin' => $request['name_of_next_of_kin'],
+                // 'address_of_next_of_kin' => $request['address_of_next_of_kin'],
+                // 'gsm_of_next_of_kin' => ('+') . $request['gsm_of_next_of_kin'],
+                // 'email_of_next_of_kin' => $request['email_of_next_of_kin'],
+                // 'title' => $request['title'],
+                // 'language' => $request['language'],
+                // 'level_of_entry' => $request['level_of_entry'],
+                // 'mode_of_entry' => $request['mode_of_entry'],
+            ]
+            );
+
+            DB::table('clearance_statuses')->where(
+                'fID', Auth::user()->fID
+            )->update(
+                [
+                    'preliminary_form' => 'UPDATED'
+                ]
+            );
+
+            return back()->withStatus(__('Your Changes Have Been Made And Will Be Looked Into'));
     }
     
 }

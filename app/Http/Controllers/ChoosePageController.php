@@ -10,16 +10,12 @@ class ChoosePageController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role == 'super-admin') {
-            return redirect()->route('super-admin.home');
-        } elseif (Auth::user()->role == 'admin') {
-            return redirect()->route('admin.home');
-        } elseif (Auth::user()->role == 'student') {
+        if (Auth::user()->role == 'student') {
             return redirect()->route('student.home');
-        } elseif (Auth::user()->role == 'teacher') {
-            return redirect()->route('teacher.home');
-        } elseif (Auth::user()->role == 'data-operator') {
-            return redirect()->route('data-operator.home');
+        } elseif (Auth::user()->role == 'hod') {
+            return redirect()->route('hod.home');
+        } elseif (Auth::user()->role == 'pg-officer') {
+            return redirect()->route('pg-officer.home');
         } else {
             abort(403);
         }
