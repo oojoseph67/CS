@@ -1840,6 +1840,12 @@
                             <p>
                                 You Have Been Cleared By The PG Officer. Wait For The HOD To Clear You
                             </p>
+                        @elseif($form_status->document == 'CLEARED' && $form_status->preliminary_form == 'CLEARED')
+                            <p>
+                                Congratulations On A Successful Clearance. You Have Been Cleared By Both The HOD And The PG Officer. 
+                                <br>
+                                You Can Now Procced To Attending Lecuture
+                            </p>
                         @else
                             <p>
                                 Congratulations On Filling Your Forms and Submitting Your Document. Seat Back And Relax While We Verify Your Details
