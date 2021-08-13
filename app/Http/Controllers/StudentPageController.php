@@ -102,10 +102,10 @@ class StudentPageController extends Controller
     {
         $request->validate([
             'passport' => ['required', 'mimes:jpeg,png,gif,jpg', 'max:10024'],
-            'o/l_certificate' => ['required', 'mimes:pdf', 'max:10024'],
-            'ufd/hnd_certificate' => ['required', 'mimes:pdf', 'max:10024'],
-            'rhd/diploma_certificate' => ['required', 'mimes:pdf', 'max:10024'],
-            'nysc/exemption_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'ol_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'ufd_hnd_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'rhd_diploma_certificate' => ['required', 'mimes:pdf', 'max:10024'],
+            'nysc_exemption_certificate' => ['required', 'mimes:pdf', 'max:10024'],
             'clearnce_certificate_fupre' => ['required', 'mimes:pdf', 'max:10024'],
             'birth_certificate' => ['required', 'mimes:pdf', 'max:10024'],
             'state_of_origin_certificate' => ['required', 'mimes:pdf', 'max:10024'],
@@ -122,20 +122,20 @@ class StudentPageController extends Controller
         $passport_name = rand().".".$request->file('passport')->extension();
         $passport->move(public_path("documents/passport"), $passport_name);
 
-        $ol_certificate = $request->file('o/l_certificate');
-        $ol_certificate_name = rand().".".$request->file('o/l_certificate')->extension();
+        $ol_certificate = $request->file('ol_certificate');
+        $ol_certificate_name = rand().".".$request->file('ol_certificate')->extension();
         $ol_certificate->move(public_path("documents/file"), $ol_certificate_name);
 
-        $ufdhnd_certificate = $request->file('ufd/hnd_certificate');
-        $ufdhnd_certificate_name = rand().".".$request->file('ufd/hnd_certificate')->extension();
+        $ufdhnd_certificate = $request->file('ufd_hnd_certificate');
+        $ufdhnd_certificate_name = rand().".".$request->file('ufd_hnd_certificate')->extension();
         $ufdhnd_certificate->move(public_path("documents/file"), $ufdhnd_certificate_name);
 
-        $rhddiploma_certificate = $request->file('rhd/diploma_certificate');
-        $rhddiploma_certificate_name = rand().".".$request->file('rhd/diploma_certificate')->extension();
+        $rhddiploma_certificate = $request->file('rhd_diploma_certificate');
+        $rhddiploma_certificate_name = rand().".".$request->file('rhd_diploma_certificate')->extension();
         $rhddiploma_certificate->move(public_path("documents/file"), $rhddiploma_certificate_name);
 
-        $nyscexemption_certificate = $request->file('nysc/exemption_certificate');
-        $nyscexemption_certificate_name = rand().".".$request->file('nysc/exemption_certificate')->extension();
+        $nyscexemption_certificate = $request->file('nysc_exemption_certificate');
+        $nyscexemption_certificate_name = rand().".".$request->file('nysc_exemption_certificate')->extension();
         $nyscexemption_certificate->move(public_path("documents/file"), $nyscexemption_certificate_name);
 
         $clearnce_certificate_fupre = $request->file('clearnce_certificate_fupre');
@@ -175,11 +175,11 @@ class StudentPageController extends Controller
         $store_documment = Document::create([
             'fID' => $request['fID'],
             'passport' => $passport_name,
-            'o/l_certificate' => $ol_certificate_name,
-            'o/l_card' => $request['o/l_card'],
-            'ufd/hnd_certificate' => $ufdhnd_certificate_name,
-            'rhd/diploma_certificate' => $rhddiploma_certificate_name,
-            'nysc/exemption_certificate' => $nyscexemption_certificate_name,
+            'ol_certificate' => $ol_certificate_name,
+            'ol_card' => $request['ol_card'],
+            'ufd_hnd_certificate' => $ufdhnd_certificate_name,
+            'rhd_diploma_certificate' => $rhddiploma_certificate_name,
+            'nysc_exemption_certificate' => $nyscexemption_certificate_name,
             'clearnce_certificate_fupre' => $clearnce_certificate_fupre_name,
             'birth_certificate' => $birth_certificate_name,
             'state_of_origin_certificate' => $state_of_origin_certificate_name,
@@ -194,11 +194,11 @@ class StudentPageController extends Controller
         $store_documment_status = DocumentStatus::create([
             'fID' => $request['fID'],
             'passport' => 'UPLOADED',
-            'o/l_certificate' => 'UPLOADED',
-            'o/l_card' => 'UPLOADED',
-            'ufd/hnd_certificate' => 'UPLOADED',
-            'rhd/diploma_certificate' => 'UPLOADED',
-            'nysc/exemption_certificate' => 'UPLOADED',
+            'ol_certificate' => 'UPLOADED',
+            'ol_card' => 'UPLOADED',
+            'ufd_hnd_certificate' => 'UPLOADED',
+            'rhd_diploma_certificate' => 'UPLOADED',
+            'nysc_exemption_certificate' => 'UPLOADED',
             'clearnce_certificate_fupre' => 'UPLOADED',
             'birth_certificate' => 'UPLOADED',
             'state_of_origin_certificate' => 'UPLOADED',
@@ -404,6 +404,390 @@ class StudentPageController extends Controller
             );
 
             return back()->withStatus(__('Your Changes Have Been Made And Will Be Looked Into'));
+    }
+
+    public function documentUpdate(Request $request)
+    {
+        $request->validate([
+            'passport' => ['mimes:jpeg,png,gif,jpg', 'max:10024'],
+            'ol_certificate' => ['mimes:pdf', 'max:10024'],
+            'ufd_hnd_certificate' => ['mimes:pdf', 'max:10024'],
+            'rhd_diploma_certificate' => ['mimes:pdf', 'max:10024'],
+            'nysc_exemption_certificate' => ['mimes:pdf', 'max:10024'],
+            'clearnce_certificate_fupre' => ['mimes:pdf', 'max:10024'],
+            'birth_certificate' => ['mimes:pdf', 'max:10024'],
+            'state_of_origin_certificate' => ['mimes:pdf', 'max:10024'],
+            'marriage_certificate' => ['mimes:pdf', 'max:10024'],
+            'admission_letter' => ['mimes:pdf', 'max:10024'],
+            'application_form' => ['mimes:pdf', 'max:10024'],
+            'transcript' => ['mimes:pdf', 'max:10024']
+        ]);
+
+        // $name = $request->file('passport')->getClientOriginalName();
+        // $extension = $request->file('passport')->extension();
+
+        if($request->file('passport') != '')
+        {
+            $passport = $request->file('passport');
+            $passport_name = rand() . "." . $request->file('passport')->extension();
+            $passport->move(public_path("documents/passport"), $passport_name);
+
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'passport' => $passport_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'passport' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('ol_certificate') != '') {
+            $ol_certificate = $request->file('ol_certificate');
+            $ol_certificate_name = rand() . "." . $request->file('ol_certificate')->extension();
+            $ol_certificate->move(public_path("documents/file"), $ol_certificate_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'ol_certificate' => $ol_certificate_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'ol_certificate' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('ufd_hnd_certificate') != '') {
+            $ufdhnd_certificate = $request->file('ufd_hnd_certificate');
+            $ufdhnd_certificate_name = rand() . "." . $request->file('ufd_hnd_certificate')->extension();
+            $ufdhnd_certificate->move(public_path("documents/file"), $ufdhnd_certificate_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [  
+                    'ufd_hnd_certificate' => $ufdhnd_certificate_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'ufd_hnd_certificate' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('rhd_diploma_certificate') != '') {
+            $rhddiploma_certificate = $request->file('rhd_diploma_certificate');
+            $rhddiploma_certificate_name = rand() . "." . $request->file('rhd_diploma_certificate')->extension();
+            $rhddiploma_certificate->move(public_path("documents/file"), $rhddiploma_certificate_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'rhd_diploma_certificate' => $rhddiploma_certificate_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'rhd_diploma_certificate' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('nysc_exemption_certificate') != '') {
+            $nyscexemption_certificate = $request->file('nysc_exemption_certificate');
+            $nyscexemption_certificate_name = rand() . "." . $request->file('nysc_exemption_certificate')->extension();
+            $nyscexemption_certificate->move(public_path("documents/file"), $nyscexemption_certificate_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'nysc_exemption_certificate' => $nyscexemption_certificate_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'nysc_exemption_certificate' => 'UPDATED',
+                ]
+            );
+
+        }
+
+        if ($request->file('clearnce_certificate_fupre') != '') {
+            $clearnce_certificate_fupre = $request->file('clearnce_certificate_fupre');
+            $clearnce_certificate_fupre_name = rand() . "." . $request->file('clearnce_certificate_fupre')->extension();
+            $clearnce_certificate_fupre->move(public_path("documents/file"), $clearnce_certificate_fupre_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'clearnce_certificate_fupre' => $clearnce_certificate_fupre_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'clearnce_certificate_fupre' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('birth_certificate') != '') {
+            $birth_certificate = $request->file('birth_certificate');
+            $birth_certificate_name = rand() . "." . $request->file('birth_certificate')->extension();
+            $birth_certificate->move(public_path("documents/file"), $birth_certificate_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'birth_certificate' => $birth_certificate_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'birth_certificate' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('state_of_origin_certificate') != '') {
+            $state_of_origin_certificate = $request->file('state_of_origin_certificate');
+            $state_of_origin_certificate_name = rand() . "." . $request->file('state_of_origin_certificate')->extension();
+            $state_of_origin_certificate->move(public_path("documents/file"), $state_of_origin_certificate_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'state_of_origin_certificate' => $state_of_origin_certificate_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'state_of_origin_certificate' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('marriage_certificate') != '') {
+            $marriage_certificate = $request->file('marriage_certificate');
+            $marriage_certificate_name = rand() . "." . $request->file('marriage_certificate')->extension();
+            $marriage_certificate->move(public_path("documents/file"), $marriage_certificate_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'marriage_certificate' => $marriage_certificate_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'marriage_certificate' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('admission_letter') != '') {
+            $admission_letter = $request->file('admission_letter');
+            $admission_letter_name = rand() . "." . $request->file('admission_letter')->extension();
+            $admission_letter->move(public_path("documents/file"), $admission_letter_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'admission_letter' => $admission_letter_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'admission_letter' => 'UPDATED',
+                ]
+            );
+        }
+
+        if ($request->file('application_form') != '') {
+            $application_form = $request->file('application_form');
+            $application_form_name = rand() . "." . $request->file('application_form')->extension();
+            $application_form->move(public_path("documents/file"), $application_form_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'application_form' => $application_form_name,
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'application_form' => 'UPDATED'
+                ]
+            );
+        }
+
+        if ($request->file('transcript') != '') {
+            $transcript = $request->file('transcript');
+            $transcript_name = rand() . "." . $request->file('transcript')->extension();
+            $transcript->move(public_path("documents/file"), $transcript_name);
+
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'transcript' => $transcript_name
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'transcript' => 'UPDATED'
+                ]
+            );
+        }
+
+        if ($request['ol_card'] != '')
+        {
+            DB::table('documents')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'ol_card' => $request['ol_card']
+                ]
+            );
+
+            DB::table('document_statuses')->where(
+                'fID',
+                Auth::user()->fID
+            )->update(
+                [
+                    'ol_card' => 'UPDATED',
+                ]
+            );
+        }
+
+        // DB::table('documents')->where(
+        //     'fID', Auth::user()->fID
+        // )->update(
+        //     [
+        //         'passport' => $passport_name,
+        //         'ol_certificate' => $ol_certificate_name,
+        //         'ol_card' => $request['ol_card'],
+        //         'ufd_hnd_certificate' => $ufdhnd_certificate_name,
+        //         'rhd_diploma_certificate' => $rhddiploma_certificate_name,
+        //         'nysc_exemption_certificate' => $nyscexemption_certificate_name,
+        //         'clearnce_certificate_fupre' => $clearnce_certificate_fupre_name,
+        //         'birth_certificate' => $birth_certificate_name,
+        //         'state_of_origin_certificate' => $state_of_origin_certificate_name,
+        //         'marriage_certificate' => $marriage_certificate_name,
+        //         'admission_letter' => $admission_letter_name,
+        //         'application_form' => $application_form_name,
+        //         'transcript' => $transcript_name
+        //     ]
+        // );
+
+        // DB::table('document_statuses')->where(
+        //     'fID', Auth::user()->fID
+        // )->update(
+        //     [
+        //         'passport' => 'UPLOADED',
+        //         'ol_certificate' => 'UPLOADED',
+        //         'ol_card' => 'UPLOADED',
+        //         'ufd_hnd_certificate' => 'UPLOADED',
+        //         'rhd_diploma_certificate' => 'UPLOADED',
+        //         'nysc_exemption_certificate' => 'UPLOADED',
+        //         'clearnce_certificate_fupre' => 'UPLOADED',
+        //         'birth_certificate' => 'UPLOADED',
+        //         'state_of_origin_certificate' => 'UPLOADED',
+        //         'marriage_certificate' => 'UPLOADED',
+        //         'admission_letter' => 'UPLOADED',
+        //         'application_form' => 'UPLOADED',
+        //         'transcript' => 'UPLOADED'
+        //     ]
+        // );
+
+        DB::table('clearance_statuses')->where(
+            'fID',
+            Auth::user()->fID
+        )->update(
+            [
+                'document' => 'UPDATED'
+            ]
+        );
+
+        return back()->withStatus(__('Your Changes Have Been Made And Will Be Looked Into'));
     }
     
 }

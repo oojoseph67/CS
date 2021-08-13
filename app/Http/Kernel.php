@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'student' => \App\Http\Middleware\StudentMiddleware::class,
         'hod' => \App\Http\Middleware\HODMiddleware::class,
+        'pgo' => \App\Http\Middleware\PGOMiddleware::class,
         'payment_verification' => \App\Http\Middleware\PaymentVerificationMiddleware::class,
     ];
 }

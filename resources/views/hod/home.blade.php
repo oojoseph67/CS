@@ -246,7 +246,7 @@
                                                                     </div>
 
                                                                     <div class="tab-pane" id="btabs-alt-static-parents" role="tabpanel">
-                                                                    <div class="form-group">
+                                                                        <div class="form-group">
                                                                             <label for="parent_name">Parent Name</label>
                                                                             <input class="form-control" type="text" id="parent_name" spellcheck="true" value="{{$detail->parent_name}}"  name="parent_name" disabled>
                                                                         </div>
@@ -344,6 +344,7 @@
                                                                             <div class="form-group">
 
                                                                                 <input type="hidden" name="fID" value="{{$detail->fID}}">
+                                                                                <input type="hidden" name="clearance_type" value="preliminary_form">
                                                                                 <input type="hidden" name="first_name" value="{{$detail->first_name}}">
                                                                                 <input type="hidden" name="last_name" value="{{$detail->last_name}}">
 
@@ -359,7 +360,7 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="note">Recommended Changes</label>
-                                                                                <textarea class="form-control form-control-alt" id="note" name="note" rows="7" name="recommendation" placeholder="Recommended Changes"></textarea>
+                                                                                <textarea class="form-control form-control-alt" rows="7" name="recommendation" placeholder="Recommended Changes"></textarea>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <button type="submit" class="btn btn-block btn-hero-primary">

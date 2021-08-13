@@ -17,11 +17,11 @@ class CreateDocumentsTable extends Migration
             $table->id();
             $table->string('fID');
             $table->string('passport');
-            $table->string('o/l_certificate');
-            $table->string('o/l_card');
-            $table->string('ufd/hnd_certificate');
-            $table->string('rhd/diploma_certificate');
-            $table->string('nysc/exemption_certificate');
+            $table->string('ol_certificate');
+            $table->string('ol_card');
+            $table->string('ufd_hnd_certificate');
+            $table->string('rhd_diploma_certificate');
+            $table->string('nysc_exemption_certificate');
             $table->string('clearnce_certificate_fupre')->nullable();
             $table->string('birth_certificate');
             $table->string('state_of_origin_certificate');

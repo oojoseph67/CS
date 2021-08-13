@@ -381,7 +381,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="o/l_card">O/L Card</label>
-                                    <input type="text" class="js-masked-phone form-control" id="o/l_card" name="o/l_card" placeholder="(999) 999-9999"  required>
+                                    <input type="text" class="js-masked-phone form-control" id="ol_card" name="ol_card" placeholder="(999) 999-9999"  required>
                                 </div> 
                             </div>
                             <div class="col-md-3"></div>
@@ -392,12 +392,12 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="o/l_certificate">O/L Certificate</label>
-                                    <input type="file" data-plugins="dropify" name="o/l_certificate" required>                           
+                                    <input type="file" data-plugins="dropify" name="ol_certificate" required>                           
                                 </div>
                                                                
                                 <div class="form-group">
                                     <label for="nysc/exemption_certificate">Relevant Higher Degree/Diploma Certificate</label>
-                                    <input type="file" data-plugins="dropify" name="nysc/exemption_certificate" required>                           
+                                    <input type="file" data-plugins="dropify" name="nysc_exemption_certificate" required>                           
                                 </div>
                                 <div class="form-group">
                                     <label for="birth_certificate">Birth Certificate</label>
@@ -405,7 +405,7 @@
                                 </div>
                                  <div class="form-group">
                                     <label for="rhd/diploma_certificate">RHD/Diploma Certificate</label>
-                                    <input type="file" data-plugins="dropify" name="rhd/diploma_certificate" required>                           
+                                    <input type="file" data-plugins="dropify" name="rhd_diploma_certificate" required>                           
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -419,7 +419,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="nysc/exemption_certificate">NYSC Discharge/Exemption Certificate</label>
-                                    <input type="file" data-plugins="dropify" name="nysc/exemption_certificate" required>                           
+                                    <input type="file" data-plugins="dropify" name="nysc_exemption_certificate" required>                           
                                 </div>
                                 <div class="form-group">
                                     <label for="marriage_certificate">Marriage Certificate</label>
@@ -437,7 +437,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="ufd/hnd_certificate">University First Degrees/HND Certificate</label>
-                                    <input type="file" data-plugins="dropify" name="ufd/hnd_certificate" required>                           
+                                    <input type="file" data-plugins="dropify" name="ufd_hnd_certificate" required>                           
                                 </div>                            
                                 <div class="form-group">
                                     <label for="clearnce_certificate_fupre">O/L Clearnce Certificate <b>FUPRE STUDENTS</b></label>
@@ -1364,9 +1364,10 @@
                 @else
                     @foreach ($form_statuses as $form_status)
                         @if ($form_status->preliminary_form == 'NOT APPROVED')
-                            <h4>Unfortunally You Had Some Errors In Your Form That Needs To Be Corrected Carefully Follow The Recommendation Made And Correct Your Form</h4>
+                            <h4>Unfortunally You Had Some Errors In Your Form That Needs To Be Corrected. <br>
+                                \ Carefully Follow The Recommendation Made And Correct Your Form</h4>
                         
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label for="note">Recommended Changes</label>
                                 <textarea class="form-control form-control-alt" id="note" name="note" rows="5" name="recommendation" disabled placeholder="{{$form_status->hod_recommendation}}"></textarea>
                             </div>
@@ -1642,10 +1643,202 @@
                                 
                             </div>
                             @endforeach
+
+                        @elseif($form_status->document == 'PENDING UPDATE')
+                            <h4>Unfortunally You Had Some Errors In Your Documents That Needs To Be Corrected. <br> Carefully Follow The Recommendation Made And Correct Your Form</h4>
+                            <div class="form-group">
+                                <label for="note">Recommended Changes</label>
+                                <textarea class="form-control form-control-alt" id="note" name="note" rows="5" name="recommendation" disabled placeholder="{{$form_status->pg_officer_recommendation}}"></textarea>
+                            </div>
+
+                            <form action="{{ route('document-update') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input class="form-control" type="hidden" id="fID" name="fID" value="{{auth()->user()->fID}}">
+                                <input class="form-control" type="hidden" id="first_name" name="first_name" value="{{auth()->user()->first_name}}">
+                                <input class="form-control" type="hidden" id="last_name" name="last_name" value="{{auth()->user()->last_name}}">
+                                <input class="form-control" type="hidden" id="email" name="email" value="{{auth()->user()->email}}">
+                                @php
+                                    $doc_stats = DB::table('document_statuses')->where(
+                                        'fID', Auth::user()->fID
+                                    )->get()
+                                @endphp
+
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h3>
+                                            <b>Note:</b> Only PDF Files Can Be Uploaded Execept In The Password Field
+                                        </h3>
+                                    </div>
+                                    @foreach ($doc_stats as $doc_stat)
+                                        
+                                    @endforeach
+                                    <div class="col-md-6">
+                                         @if ($doc_stat->ol_card == 'NOT APPROVED')
+
+                                            @php
+                                                $ol_card = DB::table('documents')->where(
+                                                    'fID', Auth::user()->fID
+                                                )->get();
+                                            @endphp
+                                            @foreach ($ol_card as $ol_card)
+                                                <div class="form-group">
+                                                    <label for="o/l_card">O/L Card</label>
+                                                    <input type="text" class="js-masked-phone form-control" id="ol_card" name="ol_card" placeholder="(999) 999-9999" value="{{$ol_card->ol_card}}" required>
+                                                </div> 
+                                            @endforeach
+                                            
+                                        @endif
+                                        
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+
+                                @foreach ($doc_stats as $doc_stat)
+                                    <div class="row">                                    
+                                        <div class="col-md-4">
+                                            @if ($doc_stat->ol_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="o/l_certificate">O/L Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="ol_certificate" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif
+
+                                            @if ($doc_stat->nysc_exemption_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="nysc/exemption_certificate">Relevant Higher Degree/Diploma Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="nysc_exemption_certificate" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif
+
+                                            @if ($doc_stat->birth_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="birth_certificate">Birth Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="birth_certificate" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif
+
+                                            @if ($doc_stat->rhd_diploma_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="rhd/diploma_certificate">RHD/Diploma Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="rhd_diploma_certificate" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif        
+                                            
+                                        </div>
+                                        <div class="col-md-4">
+                                            {{-- <div class="form-group">
+                                                <label for="o/l_card">O/l Card</label>
+                                                <input type="input" name="o/l_card" required>                           
+                                            </div>                            --}} 
+                                            @if ($doc_stat->state_of_origin_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="state_of_origin_certificate">State Of Origin Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="state_of_origin_certificate" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+
+                                            @if ($doc_stat->nysc_exemption_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="nysc/exemption_certificate">NYSC Discharge/Exemption Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="nysc_exemption_certificate" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+
+                                            @if ($doc_stat->marriage_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="marriage_certificate">Marriage Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="marriage_certificate">                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+
+                                            @if ($doc_stat->transcript == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="transcript">Transcript</label>
+                                                    <input type="file" data-plugins="dropify" name="transcript" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+
+                                            @if ($doc_stat->passport == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="passport">Passport</label>
+                                                    <input type="file" data-plugins="dropify" name="passport" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+                                            
+                                        </div>
+                                        <div class="col-md-4">
+                                            @if ($doc_stat->ufd_hnd_certificate == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="ufd/hnd_certificate">University First Degrees/HND Certificate</label>
+                                                    <input type="file" data-plugins="dropify" name="ufd_hnd_certificate" required>                           
+                                                </div>    
+                                            @else
+                                                
+                                            @endif  
+
+                                            @if ($doc_stat->clearnce_certificate_fupre == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="clearnce_certificate_fupre">O/L Clearnce Certificate <b>FUPRE STUDENTS</b></label>
+                                                    <input type="file" data-plugins="dropify" name="clearnce_certificate_fupre">                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+
+                                            @if ($doc_stat->admission_letter == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="admission_letter">Letter Of Admissionn</label>
+                                                    <input type="file" data-plugins="dropify" name="admission_letter" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+
+                                            @if ($doc_stat->application_form == 'NOT APPROVED')
+                                                <div class="form-group">
+                                                    <label for="application_form">Copy Of The Online Application Form</label>
+                                                    <input type="file" data-plugins="dropify" name="application_form" required>                           
+                                                </div>
+                                            @else
+                                                
+                                            @endif  
+                                        </div>
+                                    </div> 
+                                @endforeach
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-block btn-hero-primary">
+                                        <i class="fa fa-fw fa-sign-in-alt mr-1"></i> Update
+                                    </button>
+                                </div>
+
+                            </form> 
                         
                         @elseif($form_status->preliminary_form == 'CLEARED')
                             <p>
                                 You Have Been Cleared By The HOD. Wait For The PG Officer To Clear You
+                            </p>
+                        @elseif($form_status->document == 'CLEARED')
+                            <p>
+                                You Have Been Cleared By The PG Officer. Wait For The HOD To Clear You
                             </p>
                         @else
                             <p>

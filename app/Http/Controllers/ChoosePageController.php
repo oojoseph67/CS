@@ -14,7 +14,7 @@ class ChoosePageController extends Controller
             return redirect()->route('student.home');
         } elseif (Auth::user()->role == 'hod') {
             return redirect()->route('hod.home');
-        } elseif (Auth::user()->role == 'pg-officer') {
+        } elseif (Auth::user()->role == 'pgo') {
             return redirect()->route('pg-officer.home');
         } else {
             abort(403);

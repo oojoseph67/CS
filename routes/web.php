@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'pref
 
     Route::post('/personalForm', [StudentPageController::class, 'personalForm'])->name('personal-form');
     Route::post('/document', [StudentPageController::class, 'document'])->name('document');
+    Route::post('/document/update', [StudentPageController::class, 'documentUpdate'])->name('document-update');
 
     Route::post('/preliminaryForm', [StudentPageController::class, 'preliminaryForm'])->name('preliminary-form');
     Route::post('/clearanceForm', [StudentPageController::class, 'clearanceForm'])->name('clearance-form');
@@ -47,9 +48,16 @@ Route::group(['middleware' => ['auth', 'student', 'payment_verification'], 'pref
 
 Route::group(['middleware' => ['auth', 'hod'], 'prefix' => 'hod'], function (){
 
-    Route::get('/', [StaffPageController::class, 'hodIndex'])->name('hod.home');
+    Route::get('/', [StaffPageController::class, 'index'])->name('hod.home');
 
     Route::post('/clearance', [StaffPageController::class, 'clearanceStatus'])->name('clearance-status');
+});
+
+Route::group(['middleware' => ['auth', ], 'prefix' => 'PGO'], function(){
+
+    Route::get('/', [StaffPageController::class, 'index'])->name('pg-officer.home');
+
+    Route::post('/doc/clearance', [StaffPageController::class, 'documentClearance'])->name('document-clearance');
 });
 
 Route::view('/unpaid', 'students.unpaid')->name('unpaid')->middleware('auth');
